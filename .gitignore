@@ -1,0 +1,192 @@
+# Laravel specific
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/*
+!/storage/app/.gitkeep
+/storage/framework/cache/*
+!/storage/framework/cache/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/testing/*
+!/storage/framework/testing/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
+/bootstrap/cache/*
+!/bootstrap/cache/.gitkeep
+
+# Environment files
+.env
+.env.backup
+.env.production
+.env.local
+.env.*.local
+
+# Configuration cache
+/config/cache/*
+!/config/cache/.gitkeep
+
+# Route cache
+/bootstrap/cache/routes-v7.php
+/bootstrap/cache/config.php
+/bootstrap/cache/services.php
+
+# Build files
+/public/build/
+/public/mix-manifest.json
+/public/js/
+/public/css/
+mix-manifest.json
+
+# Dependencies
+composer.lock
+package-lock.json
+yarn.lock
+
+# IDE and Editor files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+*.temp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# PHPUnit
+/phpunit.xml
+/.phpunit.result.cache
+
+# Telescope
+telescope-cache/
+
+# Laravel Horizon
+horizon-cache/
+
+# Laravel Nova
+nova/
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# NPM/Yarn/PNPM
+*.tgz
+.pnpm-debug.log*
+
+# Testing
+/coverage/
+_coverage/
+
+# Laravel specific cache files
+*.cache
+auth.json
+
+# Multiple project specific ignores
+# (useful for POC projects)
+/tmp/
+/temp/
+/draft/
+/test-*/
+/poc-*/
+/backup/
+/old/
+*.backup
+*.bak
+*.old
+
+# Database files (if using SQLite for POCs)
+*.sqlite
+*.sqlite3
+*.db
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Vagrant
+.vagrant/
+
+# Laravel Sail
+docker-compose.override.yml
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
