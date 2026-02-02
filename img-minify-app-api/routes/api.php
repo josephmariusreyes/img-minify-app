@@ -10,4 +10,5 @@ use App\Http\Controllers\ImageController;
 
 
 Route::post('/optimizeImage', [ImageController::class, 'OptimizeImage']);
-Route::post('/getOptimizedImages', [ImageController::class, 'GetOptimizedImages']);
+Route::get('/getOptimizedImage/{id}', [ImageController::class, 'GetOptimizedImage']);
+Route::get('/images/{id}/download', [ImageController::class, 'downloadOptimizedImage'])->name('images.download');

@@ -91,7 +91,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: January 29, 2026</li>
+        <li>Last updated: February 2, 2026</li>
     </ul>
 </div>
 
@@ -386,7 +386,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/optimizeImage" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "files[]=@C:\Users\josep\AppData\Local\Temp\php6B37.tmp" </code></pre></div>
+    --form "files[]=@C:\Users\josep\AppData\Local\Temp\phpE2A1.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -411,7 +411,18 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-optimizeImage">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;id&quot;: &quot;&quot;,
+    &quot;message&quot;: &quot;&quot;
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-optimizeImage" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-optimizeImage"></span>:

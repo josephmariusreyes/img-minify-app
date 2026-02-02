@@ -129,7 +129,13 @@ endpoints:
     fileParameters:
       files:
         - null
-    responses: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"id":"","message":""}'
+        headers: []
+        description: ''
     responseFields: []
     auth: []
     controller: null
