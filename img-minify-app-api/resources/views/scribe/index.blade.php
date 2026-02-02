@@ -80,6 +80,12 @@
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-optimizeImage">
                                 <a href="#endpoints-POSTapi-optimizeImage">POST api/optimizeImage</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-getOptimizedImage--id-">
+                                <a href="#endpoints-GETapi-getOptimizedImage--id-">GET api/getOptimizedImage/{id}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-images--id--download">
+                                <a href="#endpoints-GETapi-images--id--download">GET api/images/{id}/download</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -386,7 +392,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/optimizeImage" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "files[]=@C:\Users\josep\AppData\Local\Temp\phpE2A1.tmp" </code></pre></div>
+    --form "files[]=@C:\Users\josep\AppData\Local\Temp\phpBB94.tmp" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -510,6 +516,280 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Must be a file. Must be an image. Must not be greater than 2048 kilobytes.</p>
         </div>
         </form>
+
+                    <h2 id="endpoints-GETapi-getOptimizedImage--id-">GET api/getOptimizedImage/{id}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-getOptimizedImage--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/getOptimizedImage/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/getOptimizedImage/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-getOptimizedImage--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;message&quot;: &quot;&quot;,
+    &quot;data&quot;: &quot;&quot;,
+    &quot;id&quot;: &quot;&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-getOptimizedImage--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-getOptimizedImage--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-getOptimizedImage--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-getOptimizedImage--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-getOptimizedImage--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-getOptimizedImage--id-" data-method="GET"
+      data-path="api/getOptimizedImage/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-getOptimizedImage--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-getOptimizedImage--id-"
+                    onclick="tryItOut('GETapi-getOptimizedImage--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-getOptimizedImage--id-"
+                    onclick="cancelTryOut('GETapi-getOptimizedImage--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-getOptimizedImage--id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/getOptimizedImage/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-getOptimizedImage--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-getOptimizedImage--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-getOptimizedImage--id-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the getOptimizedImage. Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-images--id--download">GET api/images/{id}/download</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-images--id--download">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/images/architecto/download" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/images/architecto/download"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-images--id--download">
+            <blockquote>
+            <p>Example response (200, Returns a zip file containing the optimized images):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">application/zip</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;File not found&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-images--id--download" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-images--id--download"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-images--id--download"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-images--id--download" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-images--id--download">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-images--id--download" data-method="GET"
+      data-path="api/images/{id}/download"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-images--id--download', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-images--id--download"
+                    onclick="tryItOut('GETapi-images--id--download');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-images--id--download"
+                    onclick="cancelTryOut('GETapi-images--id--download');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-images--id--download"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/images/{id}/download</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-images--id--download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-images--id--download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="id"                data-endpoint="GETapi-images--id--download"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>The ID of the image. Example: <code>architecto</code></p>
+            </div>
+                    </form>
 
             
 

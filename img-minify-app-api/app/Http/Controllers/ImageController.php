@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    #[Endpoint(method: 'POST')]
     #[Response(
         status: 200,
         content: [
@@ -46,7 +45,6 @@ class ImageController extends Controller
         ], 200);
     }
     
-    #[Endpoint(method: 'GET')]
     #[Response(
         status: 200,
         content: [
@@ -78,7 +76,6 @@ class ImageController extends Controller
         ], 200);
     }
 
-    #[Endpoint(method: 'GET')]
     #[Response(
         status: 200,
         content: 'application/zip',

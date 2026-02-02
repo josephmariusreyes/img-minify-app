@@ -26,4 +26,23 @@ class OptimizeImageRequest extends FormRequest
             'files.*'=> 'file|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
+
+    /**
+     * Get the body parameters documentation for Scribe.
+     *
+     * @return array
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'files' => [
+                'description' => 'Array of image files to optimize',
+                'example' => null,
+            ],
+            'files.*' => [
+                'description' => 'Image file (JPG, JPEG, or PNG format, max 2MB)',
+                'example' => null,
+            ],
+        ];
+    }
 }
