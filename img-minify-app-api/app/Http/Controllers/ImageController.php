@@ -28,30 +28,18 @@ class ImageController extends Controller
     )]
     public function optimizeImage(OptimizeImageRequest $request)
     {
-        //Validated the files received
-
-        //Create an ID based from UTC time
-
-        //Create record in DB
-        //ID
-        //Status
-        //Email
-        //CreatedDate
-
-        //Upload the files in server memory, put it in inside folder named in the generated ID
-        // TODO: Use $this->imageOptimizationService->uploadImages()
+        // Upload validated images and get generated ID
+        $uploadId = $this->imageOptimizationService->uploadImages($request->file('files'));
 
         //Run a background que to optimize the image,
         // TODO: Use $this->imageOptimizationService->optimizeImages()
 
         //in the payload of the que include the generatedID for reference
         
-        //Background que will be the one to optimize the image
-
         return response()->json([
             'success' => true,
-            'id' => 'Lorem ipsum test',
-            'message' => ''
+            'id' => $uploadId,
+            'message' => 'Images uploaded successfully. Optimization in progress.'
         ], 200);
     }
     

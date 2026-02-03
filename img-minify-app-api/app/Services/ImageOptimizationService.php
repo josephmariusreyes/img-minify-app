@@ -9,13 +9,12 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
     /**
      * Upload images to storage
      * 
-     * @param array $images Array of uploaded image files
-     * @param string $requestId Unique identifier for this upload request
-     * @return array Returns information about uploaded images
+     * @param array $files Array of uploaded files from request
+     * @return string Returns the generated request ID
      */
-    public function uploadImages(array $images, string $requestId): array
+    public function uploadImages(array $files): string
     {
-        // TODO: Validate image files (type, size, format)
+        // TODO: Generate unique request ID (e.g., UUID or timestamp-based)
         
         // TODO: Generate unique filenames for each image
         
@@ -23,9 +22,11 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
         
         // TODO: Store original images in the designated folder
         
-        // TODO: Return paths and metadata of uploaded images
+        // TODO: Store metadata in database (requestId, original filenames, sizes, etc.)
         
-        return [];
+        // TODO: Return the generated requestId
+        
+        return '';
     }
 
     /**
