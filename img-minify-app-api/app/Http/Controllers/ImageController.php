@@ -7,9 +7,17 @@ use App\Http\Requests\OptimizeImageRequest;
 use Knuckles\Scribe\Attributes\Response;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Illuminate\Support\Facades\Storage;
+use App\Services\Contracts\ImageOptimizationServiceInterface;
 
 class ImageController extends Controller
 {
+    /**
+     * Constructor - inject ImageOptimizationService
+     */
+    public function __construct(
+        private ImageOptimizationServiceInterface $imageOptimizationService
+    ) {}
+
     #[Response(
         status: 200,
         content: [
@@ -31,8 +39,10 @@ class ImageController extends Controller
         //CreatedDate
 
         //Upload the files in server memory, put it in inside folder named in the generated ID
+        // TODO: Use $this->imageOptimizationService->uploadImages()
 
         //Run a background que to optimize the image,
+        // TODO: Use $this->imageOptimizationService->optimizeImages()
 
         //in the payload of the que include the generatedID for reference
         
@@ -40,7 +50,7 @@ class ImageController extends Controller
 
         return response()->json([
             'success' => true,
-            'id' => 'Lorem ipsum',
+            'id' => 'Lorem ipsum test',
             'message' => ''
         ], 200);
     }
@@ -89,6 +99,8 @@ class ImageController extends Controller
     )]
     public function downloadOptimizedImage(string $id)
     {
+        // TODO: Use $this->imageOptimizationService->downloadImages()
+        
         $path = "optimized/{$id}/output.zip";
 
         if (!Storage::exists($path)) {

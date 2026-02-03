@@ -390,9 +390,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
     "http://localhost/api/optimizeImage" \
-    --header "Content-Type: multipart/form-data" \
+    --header "Content-Type: application/json" \
     --header "Accept: application/json" \
-    --form "files[]=@C:\Users\josep\AppData\Local\Temp\phpBB94.tmp" </code></pre></div>
+</code></pre></div>
 
 
 <div class="javascript-example">
@@ -401,17 +401,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
 );
 
 const headers = {
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "application/json",
     "Accept": "application/json",
 };
-
-const body = new FormData();
-body.append('files[]', document.querySelector('input[name="files[]"]').files[0]);
 
 fetch(url, {
     method: "POST",
     headers,
-    body,
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
@@ -447,7 +443,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <form id="form-POSTapi-optimizeImage" data-method="POST"
       data-path="api/optimizeImage"
       data-authed="0"
-      data-hasfiles="1"
+      data-hasfiles="0"
       data-isarraybody="0"
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('POSTapi-optimizeImage', this);">
@@ -483,10 +479,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="Content-Type"                data-endpoint="POSTapi-optimizeImage"
-               value="multipart/form-data"
+               value="application/json"
                data-component="header">
     <br>
-<p>Example: <code>multipart/form-data</code></p>
+<p>Example: <code>application/json</code></p>
             </div>
                                 <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
@@ -513,7 +509,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="files[1]"                data-endpoint="POSTapi-optimizeImage"
                data-component="body">
     <br>
-<p>Must be a file. Must be an image. Must not be greater than 2048 kilobytes.</p>
+<p>Image file (JPG, JPEG, or PNG format, max 2MB). Must be a file. Must be an image. Must not be greater than 2048 kilobytes.</p>
         </div>
         </form>
 

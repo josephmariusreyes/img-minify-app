@@ -106,7 +106,7 @@ endpoints:
       authenticated: false
       deprecated: false
     headers:
-      Content-Type: multipart/form-data
+      Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
@@ -116,19 +116,16 @@ endpoints:
       files:
         custom: []
         name: files
-        description: 'Must be a file. Must be an image. Must not be greater than 2048 kilobytes.'
+        description: 'Image file (JPG, JPEG, or PNG format, max 2MB). Must be a file. Must be an image. Must not be greater than 2048 kilobytes.'
         required: false
-        example:
-          - null
+        example: null
         type: 'file[]'
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanBodyParameters: []
-    fileParameters:
-      files:
-        - null
+    fileParameters: []
     responses:
       -
         custom: []
