@@ -193,3 +193,4 @@ tmp/
 
 # VS
 .vs
+!/img-minify-app-api/.vscode/launch.json

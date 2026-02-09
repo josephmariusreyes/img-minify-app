@@ -19,7 +19,7 @@ class Upload extends Model
     // Mass-assignable fields
     protected $fillable = [
         'email',
-        'status',
+        'upload_status',
         'created_at',
         'updated_at',
         'upload_metadata',

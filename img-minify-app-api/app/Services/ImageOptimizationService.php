@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Services\Contracts\ImageOptimizationServiceInterface;
 use App\Models\Upload;
+use App\Enums\upload_status;
+use Illuminate\Support\Facades\Storage;
 
 class ImageOptimizationService implements ImageOptimizationServiceInterface
 {
@@ -15,35 +17,22 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
      */
     public function uploadImages(array $files, string $email): string
     {
+        // Create upload record first to get the upload_id
         $upload = Upload::create([
             'email' => $email,
-            'status' => 'pending',
+            'upload_status' => upload_status::Pending->value,
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString(),
-            'upload_metadata' => [
-                'img-1' => [
-                    'origSize' => '24mb',
-                    'optimizedSize' => '10mb',
-                ],
-                'img-2' => [
-                    'origSize' => '18mb',
-                    'optimizedSize' => '8mb',
-                ],
-            ],
+            'upload_metadata' => [],
         ]);
 
-        $uploads = Upload::all();
-        // TODO: Generate unique filenames for each image
+        $upload_id = $upload->id;
+
+        // Process and store files, then update metadata
+        $metadata = $this->processImageFiles($files, $upload_id);
+        $upload->update(['upload_metadata' => $metadata]);
         
-        // TODO: Create a folder structure based on requestId
-        
-        // TODO: Store original images in the designated folder
-        
-        // TODO: Store metadata in database (requestId, original filenames, sizes, etc.)
-        
-        // TODO: Return the generated requestId
-        
-        return '';
+        return (string) $upload_id;
     }
 
     /**
@@ -93,5 +82,44 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
         // TODO: Handle cases where only one image exists (direct download vs zip)
         
         return null;
+    }
+
+    /**
+     * Process image files and generate metadata
+     * 
+     * @param array $files Array of uploaded files
+     * @param int $upload_id The upload ID for folder structure
+     * @return array Returns metadata for each file
+     */
+    private function processImageFiles(array $files, int $upload_id): array
+    {
+        $metadata = [];
+        $uploadPath = "uploads/{$upload_id}";
+        
+        foreach ($files as $index => $file) {
+            $originalName = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $fileName = pathinfo($originalName, PATHINFO_FILENAME);
+            
+            // Store the file in storage/app/private/uploads/{upload_id}
+            $storedPath = Storage::disk('local')->putFileAs(
+                $uploadPath,
+                $file,
+                $originalName
+            );
+            
+            $key = 'img-' . ($index + 1);
+            $metadata[$key] = [
+                'originalName' => $originalName,
+                'fileName' => $fileName,
+                'extension' => $extension,
+                'storagePath' => $storedPath,
+                'origSize' => $file->getSize(),
+                'optimizedSize' => 0,
+                'mimeType' => $file->getMimeType(),
+            ];
+        }
+        
+        return $metadata;
     }
 }
