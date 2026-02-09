@@ -116,7 +116,7 @@ endpoints:
       files:
         custom: []
         name: files
-        description: 'Image file (JPG, JPEG, or PNG format, max 2MB). Must be a file. Must be an image. Must not be greater than 2048 kilobytes.'
+        description: 'Image file (JPG, JPEG, or PNG format only). Must be a file. Must be an image. Must not be greater than 262144 kilobytes.'
         required: false
         example: null
         type: 'file[]'
@@ -124,7 +124,19 @@ endpoints:
         exampleWasSpecified: false
         nullable: false
         deprecated: false
-    cleanBodyParameters: []
+      email:
+        custom: []
+        name: email
+        description: 'Optional email address. Must be a valid email address.'
+        required: false
+        example: user@example.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      email: user@example.com
     fileParameters: []
     responses:
       -
