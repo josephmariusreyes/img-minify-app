@@ -24,6 +24,7 @@ class OptimizeImageRequest extends FormRequest
         return [
             'files'  => 'required|array|min:1|max:5',
             'files.*'=> 'file|image|mimes:jpg,jpeg,png|max:262144', // Max 256MB per file
+            'email'  => 'nullable|email',
         ];
     }
 
@@ -43,6 +44,7 @@ class OptimizeImageRequest extends FormRequest
             'files.*.image' => 'Each file must be a valid image.',
             'files.*.mimes' => 'Only JPG, JPEG, and PNG file formats are allowed.',
             'files.*.max' => 'Each image file size must not exceed 256MB.',
+            'email.email' => 'Please provide a valid email address.',
         ];
     }
 
@@ -85,6 +87,10 @@ class OptimizeImageRequest extends FormRequest
             'files.*' => [
                 'description' => 'Image file (JPG, JPEG, or PNG format only)',
                 'example' => null,
+            ],
+            'email' => [
+                'description' => 'Optional email address',
+                'example' => 'user@example.com',
             ],
         ];
     }

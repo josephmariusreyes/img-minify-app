@@ -28,14 +28,18 @@ class ImageController extends Controller
     )]
     public function optimizeImage(OptimizeImageRequest $request)
     {
+        // Extract validated data
+        $files = $request->validated()['files'];
+        $email = $request->validated()['email'] ?? null;
+
         // Upload validated images and get generated ID
-        $uploadId = $this->imageOptimizationService->uploadImages($request->file('files'));
+        $uploadId = $this->imageOptimizationService->uploadImages($files, $email);
 
         //Run a background que to optimize the image,
         // TODO: Use $this->imageOptimizationService->optimizeImages()
 
         //in the payload of the que include the generatedID for reference
-        
+
         return response()->json([
             'success' => true,
             'id' => $uploadId,

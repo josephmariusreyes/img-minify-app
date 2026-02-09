@@ -97,7 +97,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 2, 2026</li>
+        <li>Last updated: February 9, 2026</li>
     </ul>
 </div>
 
@@ -392,6 +392,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/optimizeImage" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
+    --data "{
+    \"email\": \"user@example.com\"
+}"
 </code></pre></div>
 
 
@@ -405,9 +408,14 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "email": "user@example.com"
+};
+
 fetch(url, {
     method: "POST",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 </span>
@@ -509,7 +517,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
                name="files[1]"                data-endpoint="POSTapi-optimizeImage"
                data-component="body">
     <br>
-<p>Image file (JPG, JPEG, or PNG format, max 2MB). Must be a file. Must be an image. Must not be greater than 2048 kilobytes.</p>
+<p>Image file (JPG, JPEG, or PNG format only). Must be a file. Must be an image. Must not be greater than 262144 kilobytes.</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>email</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="email"                data-endpoint="POSTapi-optimizeImage"
+               value="user@example.com"
+               data-component="body">
+    <br>
+<p>Optional email address. Must be a valid email address. Example: <code>user@example.com</code></p>
         </div>
         </form>
 

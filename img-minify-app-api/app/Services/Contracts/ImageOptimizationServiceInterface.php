@@ -11,7 +11,7 @@ interface ImageOptimizationServiceInterface
      * @return string Returns the generated request ID
      * 
      */
-    public function uploadImages(array $files): string;
+    public function uploadImages(array $files, string $email): string;
 
     /**
      * Optimize uploaded images

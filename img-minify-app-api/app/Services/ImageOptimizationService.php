@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Contracts\ImageOptimizationServiceInterface;
+use App\Models\Upload;
 
 class ImageOptimizationService implements ImageOptimizationServiceInterface
 {
@@ -12,10 +13,26 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
      * @param array $files Array of uploaded files from request
      * @return string Returns the generated request ID
      */
-    public function uploadImages(array $files): string
+    public function uploadImages(array $files, string $email): string
     {
-        // TODO: Generate unique request ID (e.g., UUID or timestamp-based)
-        
+        $upload = Upload::create([
+            'email' => $email,
+            'status' => 'pending',
+            'created_at' => now()->toDateTimeString(),
+            'updated_at' => now()->toDateTimeString(),
+            'upload_metadata' => [
+                'img-1' => [
+                    'origSize' => '24mb',
+                    'optimizedSize' => '10mb',
+                ],
+                'img-2' => [
+                    'origSize' => '18mb',
+                    'optimizedSize' => '8mb',
+                ],
+            ],
+        ]);
+
+        $uploads = Upload::all();
         // TODO: Generate unique filenames for each image
         
         // TODO: Create a folder structure based on requestId
