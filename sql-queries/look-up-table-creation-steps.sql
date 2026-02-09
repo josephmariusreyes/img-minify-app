@@ -15,10 +15,8 @@
 
 --DELETE FROM public.uploads;
 
-ALTER TABLE public.uploads
-ADD CONSTRAINT fk_uploads_upload_status
-FOREIGN KEY (upload_status)
-REFERENCES lookup.upload_status (value);
+--ALTER TABLE public.uploads
+--ADD CONSTRAINT fk_uploads_upload_status
+--FOREIGN KEY (upload_status)
+--REFERENCES lookup.upload_status (value);
 
---select * from public.uploads
---select * from lookup.upload_status
