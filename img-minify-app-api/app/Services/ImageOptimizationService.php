@@ -42,21 +42,222 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
      * @param array $options Optimization options (quality, format, dimensions, etc.)
      * @return array Returns optimization results and statistics
      */
-    public function optimizeImages(string $requestId, array $options = []): array
+    public function optimizeImages(string $upload_id, array $options = []): array
     {
-        // TODO: Retrieve original images from storage using requestId
-        
-        // TODO: Apply image optimization algorithms (compression, resizing, format conversion)
-        
-        // TODO: Save optimized images in a separate location
-        
-        // TODO: Calculate and track size reduction statistics
-        
-        // TODO: Update database record with optimization status and results
-        
-        // TODO: Handle different image formats (jpg, png, webp, etc.)
-        
+ 
         return [];
+    }
+
+    /**
+     * Optimize images and create a zip file
+     * 
+     * @param int $uploadId The upload ID
+     * @return array Returns the result with zip file path and statistics
+     */
+    public function optimizedImage(int $uploadId): array
+    {
+        // Define paths
+        $sourcePath = storage_path("app/private/uploads/{$uploadId}");
+        $publicPath = storage_path("app/public/{$uploadId}");
+        
+        // Check if source directory exists
+        if (!is_dir($sourcePath)) {
+            return [
+                'success' => false,
+                'message' => 'Upload folder not found',
+            ];
+        }
+
+        // Create public directory if it doesn't exist
+        if (!is_dir($publicPath)) {
+            mkdir($publicPath, 0755, true);
+        }
+
+        // Get all image files from the source directory
+        $imageFiles = glob($sourcePath . '/*.*');
+        $imageFiles = array_filter($imageFiles, function($file) {
+            $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            return in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
+        });
+
+        if (empty($imageFiles)) {
+            return [
+                'success' => false,
+                'message' => 'No images found in upload folder',
+            ];
+        }
+
+        // Create temporary directory for optimized images
+        $tempDir = storage_path("app/temp/optimized_{$uploadId}");
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+
+        $optimizationStats = [];
+        $totalOriginalSize = 0;
+        $totalOptimizedSize = 0;
+
+        // Optimize each image
+        foreach ($imageFiles as $imagePath) {
+            $filename = basename($imagePath);
+            $extension = strtolower(pathinfo($imagePath, PATHINFO_EXTENSION));
+            $outputPath = $tempDir . '/' . $filename;
+
+            $originalSize = filesize($imagePath);
+            $totalOriginalSize += $originalSize;
+
+            // Optimize the image
+            $optimized = $this->optimizeImage($imagePath, $outputPath, $extension);
+
+            if ($optimized) {
+                $optimizedSize = filesize($outputPath);
+                $totalOptimizedSize += $optimizedSize;
+                
+                $optimizationStats[] = [
+                    'filename' => $filename,
+                    'originalSize' => $originalSize,
+                    'optimizedSize' => $optimizedSize,
+                    'savings' => $originalSize - $optimizedSize,
+                    'savingsPercent' => round((($originalSize - $optimizedSize) / $originalSize) * 100, 2),
+                ];
+            }
+        }
+
+        // Create zip file with current date and time
+        $zipFilename = date('Y-m-d_H-i-s') . '.zip';
+        $zipPath = $publicPath . '/' . $zipFilename;
+
+        $zip = new \ZipArchive();
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            // Add all optimized images to zip
+            foreach (glob($tempDir . '/*.*') as $file) {
+                $zip->addFile($file, basename($file));
+            }
+            $zip->close();
+        } else {
+            // Clean up temp directory
+            $this->deleteDirectory($tempDir);
+            
+            return [
+                'success' => false,
+                'message' => 'Failed to create zip file',
+            ];
+        }
+
+        // Clean up temporary directory
+        $this->deleteDirectory($tempDir);
+
+        // Update upload status
+        $upload = Upload::find($uploadId);
+        if ($upload) {
+            $upload->update([
+                'upload_status' => upload_status::Active->value,
+                'updated_at' => now()->toDateTimeString(),
+            ]);
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Images optimized successfully',
+            'zipFile' => $zipFilename,
+            'zipPath' => "public/{$uploadId}/{$zipFilename}",
+            'totalImages' => count($optimizationStats),
+            'totalOriginalSize' => $totalOriginalSize,
+            'totalOptimizedSize' => $totalOptimizedSize,
+            'totalSavings' => $totalOriginalSize - $totalOptimizedSize,
+            'totalSavingsPercent' => $totalOriginalSize > 0 
+                ? round((($totalOriginalSize - $totalOptimizedSize) / $totalOriginalSize) * 100, 2) 
+                : 0,
+            'stats' => $optimizationStats,
+        ];
+    }
+
+    /**
+     * Optimize a single image file
+     * 
+     * @param string $inputPath Input image path
+     * @param string $outputPath Output image path
+     * @param string $extension File extension
+     * @return bool Success status
+     */
+    private function optimizeImage(string $inputPath, string $outputPath, string $extension): bool
+    {
+        try {
+            switch ($extension) {
+                case 'jpg':
+                case 'jpeg':
+                    $image = imagecreatefromjpeg($inputPath);
+                    if ($image) {
+                        // Save with 85% quality for good balance between size and quality
+                        imagejpeg($image, $outputPath, 85);
+                        imagedestroy($image);
+                        return true;
+                    }
+                    break;
+
+                case 'png':
+                    $image = imagecreatefrompng($inputPath);
+                    if ($image) {
+                        // Enable compression, level 9 (maximum compression)
+                        imagepng($image, $outputPath, 9);
+                        imagedestroy($image);
+                        return true;
+                    }
+                    break;
+
+                case 'gif':
+                    $image = imagecreatefromgif($inputPath);
+                    if ($image) {
+                        imagegif($image, $outputPath);
+                        imagedestroy($image);
+                        return true;
+                    }
+                    break;
+
+                case 'webp':
+                    $image = imagecreatefromwebp($inputPath);
+                    if ($image) {
+                        // Save with 85% quality
+                        imagewebp($image, $outputPath, 85);
+                        imagedestroy($image);
+                        return true;
+                    }
+                    break;
+
+                default:
+                    // Unsupported format, just copy the file
+                    copy($inputPath, $outputPath);
+                    return true;
+            }
+        } catch (\Exception $e) {
+            // If optimization fails, copy the original file
+            copy($inputPath, $outputPath);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Recursively delete a directory and its contents
+     * 
+     * @param string $dir Directory path
+     * @return bool Success status
+     */
+    private function deleteDirectory(string $dir): bool
+    {
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $files = array_diff(scandir($dir), ['.', '..']);
+        
+        foreach ($files as $file) {
+            $path = $dir . '/' . $file;
+            is_dir($path) ? $this->deleteDirectory($path) : unlink($path);
+        }
+
+        return rmdir($dir);
     }
 
     /**

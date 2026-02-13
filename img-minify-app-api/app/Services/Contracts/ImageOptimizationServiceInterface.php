@@ -21,7 +21,7 @@ interface ImageOptimizationServiceInterface
      * @return array Returns optimization results and statistics
      * 
      */
-    public function optimizeImages(string $requestId, array $options = []): array;
+    public function optimizeImages(string $uploadId, array $options = []): array;
 
     /**
      * Download optimized images

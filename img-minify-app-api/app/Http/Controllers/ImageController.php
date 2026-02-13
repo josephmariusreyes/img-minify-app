@@ -56,6 +56,7 @@ class ImageController extends Controller
             'id' => ''
         ]
     )]
+    
     public function getOptimizedImage(string $id): JsonResponse
     {
         //this will be called with the unique ID
@@ -101,4 +102,6 @@ class ImageController extends Controller
 
         return Storage::download($path);
     }
+
+
 }
