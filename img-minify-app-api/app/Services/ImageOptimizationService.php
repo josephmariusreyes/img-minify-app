@@ -36,25 +36,12 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
     }
 
     /**
-     * Optimize uploaded images
-     * 
-     * @param string $requestId Unique identifier for the images to optimize
-     * @param array $options Optimization options (quality, format, dimensions, etc.)
-     * @return array Returns optimization results and statistics
-     */
-    public function optimizeImages(string $upload_id, array $options = []): array
-    {
- 
-        return [];
-    }
-
-    /**
      * Optimize images and create a zip file
      * 
      * @param int $uploadId The upload ID
      * @return array Returns the result with zip file path and statistics
      */
-    public function optimizedImage(int $uploadId): array
+    public function optimizeImages(string $uploadId, array $options = []): array
     {
         // Define paths
         $sourcePath = storage_path("app/private/uploads/{$uploadId}");
@@ -93,9 +80,11 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
             mkdir($tempDir, 0755, true);
         }
 
-        $optimizationStats = [];
         $totalOriginalSize = 0;
         $totalOptimizedSize = 0;
+
+        $uploadData = Upload::findOrFail($uploadId);
+        $upload_metadata = json_decode($uploadData['upload_metadata'], true);
 
         // Optimize each image
         foreach ($imageFiles as $imagePath) {
@@ -113,13 +102,13 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
                 $optimizedSize = filesize($outputPath);
                 $totalOptimizedSize += $optimizedSize;
                 
-                $optimizationStats[] = [
-                    'filename' => $filename,
-                    'originalSize' => $originalSize,
-                    'optimizedSize' => $optimizedSize,
-                    'savings' => $originalSize - $optimizedSize,
-                    'savingsPercent' => round((($originalSize - $optimizedSize) / $originalSize) * 100, 2),
-                ];
+                // Update the corresponding entry in upload_metadata
+                foreach ($upload_metadata as $index => $metadata) {
+                    if ($metadata['originalName'] === $filename) {
+                        $upload_metadata[$index]['optimizedSize'] = $optimizedSize;
+                        break;
+                    }
+                }
             }
         }
 
@@ -148,27 +137,17 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
         $this->deleteDirectory($tempDir);
 
         // Update upload status
-        $upload = Upload::find($uploadId);
-        if ($upload) {
-            $upload->update([
-                'upload_status' => upload_status::Active->value,
-                'updated_at' => now()->toDateTimeString(),
-            ]);
-        }
+        $uploadData->update([
+            'upload_status' => upload_status::Active->value,
+            'updated_at' => now()->toDateTimeString(),
+            'upload_metadata' => $upload_metadata,
+        ]);
 
         return [
             'success' => true,
             'message' => 'Images optimized successfully',
             'zipFile' => $zipFilename,
-            'zipPath' => "public/{$uploadId}/{$zipFilename}",
-            'totalImages' => count($optimizationStats),
-            'totalOriginalSize' => $totalOriginalSize,
-            'totalOptimizedSize' => $totalOptimizedSize,
-            'totalSavings' => $totalOriginalSize - $totalOptimizedSize,
-            'totalSavingsPercent' => $totalOriginalSize > 0 
-                ? round((($totalOriginalSize - $totalOptimizedSize) / $totalOriginalSize) * 100, 2) 
-                : 0,
-            'stats' => $optimizationStats,
+            'zipPath' => "public/{$uploadId}/{$zipFilename}"
         ];
     }
 
@@ -309,8 +288,7 @@ class ImageOptimizationService implements ImageOptimizationServiceInterface
                 $originalName
             );
             
-            $key = 'img-' . ($index + 1);
-            $metadata[$key] = [
+            $metadata[] = [
                 'originalName' => $originalName,
                 'fileName' => $fileName,
                 'extension' => $extension,

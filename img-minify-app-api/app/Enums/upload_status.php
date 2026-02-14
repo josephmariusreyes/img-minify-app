@@ -6,6 +6,6 @@ enum upload_status: string
 {
     case Pending = '1';
     case Active = '2';
-    case Archived = '3';
+    case Done = '3';
 }
 

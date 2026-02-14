@@ -103,5 +103,12 @@ class ImageController extends Controller
         return Storage::download($path);
     }
 
+    public function testOptimizeImage(string $uploadId): JsonResponse
+    {
+        // Call the optimizeImages method
+        $result = $this->imageOptimizationService->optimizeImages($uploadId);
+
+        return response()->json($result, 200);
+    }
 
 }

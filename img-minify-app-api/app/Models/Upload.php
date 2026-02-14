@@ -4,6 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $email
+ * @property string $upload_status
+ * @property string $created_at
+ * @property string $updated_at
+ * @property array $upload_metadata
+ */
 class Upload extends Model
 {
     protected $table = 'uploads';
