@@ -9,6 +9,7 @@ use App\Http\Controllers\ImageController;
 // })->middleware('auth:sanctum');
 
 
-Route::post('/optimizeImage', [ImageController::class, 'OptimizeImage']);
-Route::get('/getOptimizedImage/{id}', [ImageController::class, 'GetOptimizedImage']);
+Route::post('/optimizeImage', [ImageController::class, 'optimizeImage']);
+Route::get('/getOptimizedImage/{id}', [ImageController::class, 'getOptimizedImage']);
 Route::get('/images/{id}/download', [ImageController::class, 'downloadOptimizedImage'])->name('images.download');
+Route::get('/testOptimizeImage/{id}', [ImageController::class, 'testOptimizeImage']);

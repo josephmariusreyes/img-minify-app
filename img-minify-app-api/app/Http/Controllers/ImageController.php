@@ -84,12 +84,6 @@ class ImageController extends Controller
         content: 'application/zip',
         description: 'Returns a zip file containing the optimized images'
     )]
-    #[Response(
-        status: 404,
-        content: [
-            'message' => 'File not found'
-        ]
-    )]
     public function downloadOptimizedImage(string $id)
     {
         // TODO: Use $this->imageOptimizationService->downloadImages()
@@ -103,10 +97,10 @@ class ImageController extends Controller
         return Storage::download($path);
     }
 
-    public function testOptimizeImage(string $uploadId): JsonResponse
+    public function testOptimizeImage(string $id): JsonResponse
     {
         // Call the optimizeImages method
-        $result = $this->imageOptimizationService->optimizeImages($uploadId);
+        $result = $this->imageOptimizationService->optimizeImages($id);
 
         return response()->json($result, 200);
     }
